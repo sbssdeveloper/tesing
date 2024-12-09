@@ -23,7 +23,7 @@ jobs:
     # Step 3: Deploy to your server using SSH
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no ruben5@192.168.1.100 << 'EOF'
+        ssh -o StrictHostKeyChecking=no ruben5@192.254.184.184 << 'EOF'
           cd /home2/ruben5/eventtrackit.com
           git pull origin main  # Pull the latest changes
           # Add additional commands here if needed, e.g. restarting services
