@@ -3,11 +3,11 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Change this to your branch name, e.g., 'develop' or 'master'
+      - main  # Trigger on pushes to the 'main' branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Using an Ubuntu runner to execute the job
+    runs-on: ubuntu-latest
 
     steps:
     # Step 1: Checkout the repository
@@ -18,13 +18,14 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH private key in GitHub secrets
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     # Step 3: Deploy to your server using SSH
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
-          cd /path/to/your/website/directory
+        ssh -o StrictHostKeyChecking=no ruben5@192.168.1.100 << 'EOF'
+          cd /home2/ruben5/eventtrackit.com
           git pull origin main  # Pull the latest changes
-          # You can add other commands here if you need to restart services, clear cache, etc.
+          # Add additional commands here if needed, e.g. restarting services
+          sudo systemctl restart apache2  # Restart Apache
         EOF
